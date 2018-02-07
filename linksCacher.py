@@ -20,11 +20,13 @@ class AddVideo(tornado.web.RequestHandler):
 
         newUrl = self.get_argument('q', '')
         newTitle = self.get_argument('title', '')
+        downloadFolder = self.get_argument('dir', '')
 
         print("Adding URL %s" % newUrl)
         print("Adding TITLE %s" % newTitle)
+        print("Adding DOWNLOAD_FOLDER %s" % downloadFolder)
 
-        processUrl.apply_async(args=[newUrl, newTitle], queue="processUrl")
+        processUrl.apply_async(args=[newUrl, newTitle, downloadFolder], queue="processUrl")
         msg = "Enqueued URL"
         # redisutils.enqueueForDownload(newUrl)
         self.write(msg)

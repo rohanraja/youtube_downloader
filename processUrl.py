@@ -8,22 +8,23 @@ from categorizer import moveMusicFile
 import urllib.request, urllib.parse, urllib.error
 
 @app.task
-def processUrl(url, title = ''):
+def processUrl(url, title = '', downloadFolder=''):
 
     url = urllib.parse.unquote_plus(url)
     title = urllib.parse.unquote_plus(title)
     print("Processing URL %s" % url)
     print("Processing TITLE %s" % title)
+    print("Processing FOLDER %s" % downloadFolder)
     done = checkIfAlreadyDone(url)
     if done == True:
         print("Already Done")
         if checkIfUnfinished(url):
-            enqueueDownload(url)
+            enqueueDownload(url, downloadFolder)
             print("STILL Enqueued For Download")
         return
 
-    saveLink(url, title)
-    enqueueDownload(url)
+    saveLink(url, title, downloadFolder)
+    enqueueDownload(url, downloadFolder)
     print("Enqueued For Download")
 
 

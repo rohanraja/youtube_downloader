@@ -2,8 +2,9 @@ __author__ = 'rohanraja'
 
 import redis as Redis
 from redisQueue import RedisQueue
+import config
 
-redis = Redis.StrictRedis(host='localhost', port=6379, db=0)
+redis = Redis.StrictRedis(host=config.getRedisIP(), port=6379, db=0)
 
 def saveDownloadDetails(youid, dldetails):
 

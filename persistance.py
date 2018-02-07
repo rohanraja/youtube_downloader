@@ -9,6 +9,7 @@ class Youlink(Model):
     url = CharField()
     path = CharField()
     state = CharField()
+    category = CharField()
 
     class Meta:
         database = db # This model uses the "people.db" database.
@@ -21,10 +22,10 @@ def getYoulinkByURL(url):
     ylink = Youlink.select().where(Youlink.url == url)
     return ylink[0]
 
-def saveLink(url, title=''):
+def saveLink(url, title='', folder=''):
 
     with db.transaction():
-        Youlink.create(url=url, path=title, state="new")
+        Youlink.create(url=url, path=title, state="new", category=folder)
 
 def checkIfAlreadyDone(url):
 
@@ -33,7 +34,7 @@ def checkIfAlreadyDone(url):
 
 def checkIfUnfinished(url):
     ylink = Youlink.select().where(Youlink.url == url)
-    return ylink[0].state != "done" and ylink[0].state != "new"
+    return ylink[0].state != "done"
 
 def setState(url, state):
 

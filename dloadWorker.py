@@ -23,9 +23,18 @@ def downloadDirectly(url, fname=''):
     if outP == 0 or outP == "0":
         markFinished(Oriurl)
 
-def _download(url, onProgress = None):
+def _download(url, folder='', onProgress = None):
 
     directory, thumbs = config.get_VID_DIR()
+    if not os.path.exists(directory):
+        os.makedirs(directory)
+
+    if folder is not '' and folder is not "default" and folder is not None:
+        directory = os.path.join(directory, folder)
+        if not os.path.exists(directory):
+            os.makedirs(directory)
+
+
     ylink = getYoulinkByURL(url)
 
     if checkIfLocked(ylink.id):
@@ -94,15 +103,15 @@ def _download(url, onProgress = None):
 
 
 @app.task
-def download_Youvideo(url):
+def download_Youvideo(url, folder=''):
 
     print("Downloading Video")
     markProcessing(url)
-    _download(url)
+    _download(url, folder)
 
 
-def enqueueDownload(url):
-    download_Youvideo.apply_async(args=[url], queue="youdownload")
+def enqueueDownload(url, folder=''):
+    download_Youvideo.apply_async(args=[url, folder], queue="youdownload")
 
 if __name__ == "__main__":
     #download_Youvideo.delay("https://www.youtube.com/watch?v=zRS9odTRHEs")

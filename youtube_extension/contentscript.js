@@ -6,15 +6,17 @@ var ft_link = window.location.href ;
 function SendLink(linkVal)
 {
   docTitle = document.title.replace(/[^0-9a-zA-Z\ ]/g, "");
+      var cat = prompt("Want to change download folder ?", "default");
+      console.log(cat);
     $.ajax({
-                        url: 'https://localhost:3011/add_link?q='+ encodeURIComponent(linkVal) + "&title=" + encodeURIComponent(docTitle),
+                        url: 'https://localhost:3011/add_link?q='+ encodeURIComponent(linkVal) + "&title=" + encodeURIComponent(docTitle) + "&dir=" + cat,
                       type: "GET",
                         async: true,
                   success : function(data){
 
                 var outText = ('Response : ' + data) ;
                 console.log(outText);
-                document.getElementById('eow-title').innerHTML += " <span style='color:blue'>"+ outText +"</span>" ;
+                document.getElementById('info').innerHTML += " <span style='color:blue'>"+ outText +"</span>" ;
 
               }});
 
@@ -34,12 +36,19 @@ function ProcessYoutubePage(){
     if(ft_link.indexOf('youtube') != -1)
     {
 
-      $('.yt-uix-tile-link').each(function(i,val){
+      var cat = prompt("Want to change download folder ?", "default");
+      console.log(cat);
+
+      var searchTerm = ".ytd-two-column-search-results-renderer, .ytd-two-column-browse-results-renderer"
+      if(ft_link.indexOf('search_query') != -1)
+        searchTerm = ".ytd-two-column-search-results-renderer"
+
+      $(searchTerm).find('a.ytd-thumbnail').each(function(i,val){
 
         console.log('http://youtube.com' + $(val).attr('href'));
 
         $.ajax({
-                          url: 'https://localhost:3011/add_link?q='+ 'https://youtube.com' + $(val).attr('href') ,
+                          url: 'https://localhost:3011/add_link?q='+ 'https://youtube.com' + $(val).attr('href') + "&dir=" + cat,
                         type: "GET",
                           async: true,
                     success : function(data){

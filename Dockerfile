@@ -18,5 +18,6 @@ RUN pip install -r requirements.txt
 COPY . .
 
 ENV YOUDL_PATH /youdl
+ENV YOUDL_REDIS algomuse.com
 
 CMD supervisord -n -c supervisor_conf/supervisord.conf

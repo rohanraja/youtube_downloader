@@ -34,6 +34,12 @@ def getDBDir():
     DB_DIR = os.path.join(DB_DIR,"youlinks.db")
     return DB_DIR
 
+def getRedisIP():
+    if os.getenv("YOUDL_REDIS") is not None:
+        return os.getenv("YOUDL_REDIS")
+    return "localhost"
+
+
 VIDEO_DOWNLOAD_DIR = os.path.join(_BASE_DIR,"youvideos")
 THUMBNAILS_DIR     = os.path.join(_BASE_DIR,"thumbs")
 
