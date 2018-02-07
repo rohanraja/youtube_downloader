@@ -1,0 +1,22 @@
+{
+  "manifest_version": 2,
+
+  "name": "Rails FT Mail",
+  "version": "1.0.0",
+  "description": "Description here",
+
+  "icons": {
+    "128" : "icon-128.png"
+  },
+
+  "browser_action": {
+	"default_icon": "icon-128.png"
+  },
+
+  "background": { "page": "background.html" },
+  "permissions": [ "tabs", "http://*/*", "https://*/*" ],
+  "options_page": "options.html",
+
+
+  "web_accessible_resources": [ "contentscript.js" ]
+}

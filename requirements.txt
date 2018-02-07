@@ -1,0 +1,7 @@
+celery==4.1.0
+peewee==3.0.13
+redis==2.10.6
+youtube_dl==2018.2.4
+tornado==4.5.2
+mongoengine==0.15.0
+js2py==0.59
