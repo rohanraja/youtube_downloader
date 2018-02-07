@@ -3,11 +3,21 @@ var ft_title = $('.svTitle').html();
 
 var ft_link = window.location.href ;
 
+function getDefaultCategory()
+{
+
+  if(localStorage.getItem("youdl_cat") == null)
+    return "default";
+  return localStorage.getItem("youdl_cat");
+
+}
+
 function SendLink(linkVal)
 {
   docTitle = document.title.replace(/[^0-9a-zA-Z\ ]/g, "");
-      var cat = prompt("Want to change download folder ?", "default");
-      console.log(cat);
+      console.log(getDefaultCategory());
+      var cat = prompt("Want to change download folder ?", getDefaultCategory());
+      localStorage.setItem("youdl_cat", cat);
     $.ajax({
                         url: 'https://localhost:3011/add_link?q='+ encodeURIComponent(linkVal) + "&title=" + encodeURIComponent(docTitle) + "&dir=" + cat,
                       type: "GET",
@@ -36,8 +46,9 @@ function ProcessYoutubePage(){
     if(ft_link.indexOf('youtube') != -1)
     {
 
-      var cat = prompt("Want to change download folder ?", "default");
+      var cat = prompt("Want to change download folder ?", getDefaultCategory());
       console.log(cat);
+      localStorage.setItem("youdl_cat", cat);
 
       var searchTerm = ".ytd-two-column-search-results-renderer, .ytd-two-column-browse-results-renderer"
       if(ft_link.indexOf('search_query') != -1)
